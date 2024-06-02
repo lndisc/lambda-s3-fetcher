@@ -49,8 +49,8 @@ resource "aws_iam_role_policy_attachment" "lambda_s3_attach" {
 
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "${path.module}/lambda_function.py"
-  output_path = "${path.module}/lambda_function.zip"
+  source_file = "${path.module}/files/lambda_function.py"
+  output_path = "${path.module}/files/lambda_function.zip"
 }
 
 resource "aws_lambda_function" "hello_world_lambda" {
