@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    archive = {
+      source = "hashicorp/archive"
+      version = "~> 2.4.0"
+    }
   }
   backend "s3" {
     bucket         	   = "eg-dev-tf-lambda-s3-fetcher"
