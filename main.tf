@@ -16,19 +16,29 @@ resource "aws_s3_object" "hello_world" {
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
-
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
     }
-
     actions = ["sts:AssumeRole"]
+  }
+}
+
+data "aws_iam_policy_document" "s3_access" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = [aws_s3_bucket.this.arn + "/*"]
   }
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
   name               = "iam_for_lambda"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_s3_attach" {
+  role       = aws_iam_role.iam_for_lambda.name
+  policy_arn = data.aws_iam_policy_document.s3_access.arn
 }
 
 /*
