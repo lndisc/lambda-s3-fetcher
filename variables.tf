@@ -3,6 +3,12 @@ variable "bucket_name" {
   type        = string
 }
 
+variable "object_key" {
+  description = "The name of the file to be fetched"
+  type = string
+  default = "hello-world.txt"
+}
+
 variable "aws_region" {
   description = "The AWS region to create resources in."
   type        = string

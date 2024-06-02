@@ -67,10 +67,8 @@ resource "aws_lambda_function" "hello_world_lambda" {
 # Invoking the Lambda function
 data "aws_lambda_invocation" "invoke_lambda" {
   function_name = aws_lambda_function.hello_world_lambda.arn
-  input = <<JSON
-    {
-      "key1": "value1",
-      "key2": "value2"
-    }
-  JSON
+  input = jsonencode({
+    "bucket_name": var.bucket_name,
+    "object_key": var.object_key
+  })
 }
