@@ -2,7 +2,7 @@ import boto3
 
 def lambda_handler(event, context):
     s3 = boto3.client('s3')
-    bucket_name = 'your-bucket-name'  # Replace with your bucket name
+    bucket_name = 'lambda-s3-fetcher'
     object_key = 'hello-world.txt'
 
     try:
