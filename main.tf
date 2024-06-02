@@ -52,7 +52,6 @@ data "archive_file" "lambda" {
   type        = "zip"
   source_file = "${path.module}/lambda/lambda_function.py"
   output_path = "${path.module}/lambda/lambda_function.zip"
-  output_base64sha256 = true
 }
 
 # Lambda function
@@ -63,8 +62,5 @@ resource "aws_lambda_function" "hello_world_lambda" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = var.lambda_handler
   runtime       = var.lambda_runtime
-  # Lifecycle to apply changes in code
-  lifecycle {
-    create_before_destroy = true
-  }
+  source_code_hash = data.archive_file.lambda.output_base64sha256
 }
