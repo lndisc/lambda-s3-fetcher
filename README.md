@@ -34,6 +34,8 @@ The task itself wasn't challenging once you know the basics of AWS and Terraform
 
 Also I needed help for optimizing the python code with http code responses.
 
+Other mini issue was that at the first attemp, terraform didn't recognize changes in the python code. I had to add the source_code_hash option in the resource.
+
 Other point to mention is that the inicial idea was to set the bucket name and file name to be fetched inside the python code. I externalized and passed during execution to have a lambda reusable.
 
 ## Were there any additional resources (either on Azure or AWS) required during the implementation? If so, please explain their necessity in the context of the solution.
