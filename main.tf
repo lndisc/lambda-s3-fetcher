@@ -63,3 +63,14 @@ resource "aws_lambda_function" "hello_world_lambda" {
   runtime       = var.lambda_runtime
   source_code_hash = data.archive_file.lambda.output_base64sha256
 }
+
+# Invoking the Lambda function
+data "aws_lambda_invocation" "invoke_lambda" {
+  function_name = aws_lambda_function.hello_world_lambda.arn
+  input = <<JSON
+    {
+      "key1": "value1",
+      "key2": "value2"
+    }
+  JSON
+}

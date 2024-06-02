@@ -32,6 +32,8 @@ This project creates an AWS Lambda function and an S3 bucket using Terraform.
 
 The task itself wasn't challenging once you know the basics of AWS and Terraform. For me, the challenging part was creating the policies and roles with Terraform. I used to create IAM roles with the policy inside the resource via the jsonencode attribute. I wanted to follow Terraform's suggestion to use aws_iam_policy_document, so I had to review the documentation to do it.
 
+Also I needed help for optimizing the python code with http code responses.
+
 ## Were there any additional resources (either on Azure or AWS) required during the implementation? If so, please explain their necessity in the context of the solution.
 
 IAM resources were essential for ensuring the security and proper functioning of our infrastructure on AWS. Specifically, they were required to manage permissions effectively, keeping the S3 Bucket private and granting necessary permissions to the Lambda function.
