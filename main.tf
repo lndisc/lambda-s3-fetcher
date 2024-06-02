@@ -13,17 +13,24 @@ resource "aws_s3_object" "hello_world" {
 
 # IAM role for lambda
 
-data "aws_iam_policy_document" "lambda_s3_access" {
+data "aws_iam_policy_document" "assume_role" {
   statement {
-    actions   = ["s3:GetObject"]
-    resources = [aws_s3_bucket.this.arn + "/*"]
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
   }
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
   name               = "iam_for_lambda"
-  assume_role_policy = data.aws_iam_policy_document.lambda_s3_access.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
+
 /*
 resource "aws_lambda_function" "hello_world_lambda" {
   filename      = "${path.module}/files/lambda_function.py"
