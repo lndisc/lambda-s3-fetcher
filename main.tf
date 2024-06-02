@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "s3_access" {
 
 resource "aws_iam_policy" "s3_access" {
   name        = "s3_access"
-  description = ""
+  description = "Policy for allowing Lambda to access S3"
   policy      = data.aws_iam_policy_document.s3_access.json
 }
 
@@ -47,16 +47,23 @@ resource "aws_iam_role_policy_attachment" "lambda_s3_attach" {
   policy_arn = aws_iam_policy.s3_access.arn
 }
 
+# Archive the Lambda function code
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "${path.module}/files/lambda_function.py"
-  output_path = "${path.module}/files/lambda_function.zip"
+  source_file = "${path.module}/lambda/lambda_function.py"
+  output_path = "${path.module}/lambda/lambda_function.zip"
 }
 
+# Lambda function
+
 resource "aws_lambda_function" "hello_world_lambda" {
-  filename      = "${path.module}/files/lambda_function.zip"
+  filename      = data.archive_file.lambda.output_path
   function_name = var.lambda_function_name
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = var.lambda_handler
   runtime       = var.lambda_runtime
+  # Lifecycle to apply changes in code
+  lifecycle {
+    create_before_destroy = true
+  }
 }
