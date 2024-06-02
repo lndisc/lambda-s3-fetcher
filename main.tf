@@ -24,21 +24,27 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-data "aws_iam_policy_document" "s3_access" {
-  statement {
-    actions   = ["s3:GetObject"]
-    resources = [aws_s3_bucket.this.arn + "/*"]
-  }
-}
-
 resource "aws_iam_role" "iam_for_lambda" {
   name               = "iam_for_lambda"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
+data "aws_iam_policy_document" "s3_access" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.this.arn}/*"]
+  }
+}
+
+resource "aws_iam_policy" "s3_access" {
+  name        = "s3_access"
+  description = ""
+  policy      = data.aws_iam_policy_document.s3_access.json
+}
+
 resource "aws_iam_role_policy_attachment" "lambda_s3_attach" {
   role       = aws_iam_role.iam_for_lambda.name
-  policy_arn = data.aws_iam_policy_document.s3_access.arn
+  policy_arn = aws_iam_policy.s3_access.arn
 }
 
 /*
@@ -49,3 +55,4 @@ resource "aws_lambda_function" "hello_world_lambda" {
   handler       = var.lambda_handler
   runtime       = var.lambda_runtime
 }
+*/
