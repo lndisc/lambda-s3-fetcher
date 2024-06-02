@@ -11,6 +11,13 @@ resource "aws_s3_object" "hello_world" {
   acl    = "private"
 }
 
+resource "aws_s3_object" "bye_world" {
+  bucket = aws_s3_bucket.this.bucket
+  key    = "bye-world.txt"
+  source = "${path.module}/files/bye-world.txt"
+  acl    = "private"
+}
+
 # IAM role for lambda
 
 data "aws_iam_policy_document" "assume_role" {
@@ -32,7 +39,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 data "aws_iam_policy_document" "s3_access" {
   statement {
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.this.arn}/*"]
+    resources = ["${aws_s3_bucket.this.arn}/${aws_s3_object.hello_world.key}"]
   }
 }
 
@@ -69,6 +76,6 @@ data "aws_lambda_invocation" "invoke_lambda" {
   function_name = aws_lambda_function.hello_world_lambda.arn
   input = jsonencode({
     "bucket_name": var.bucket_name,
-    "object_key": var.object_key
+    "object_key": "${aws_s3_object.hello_world.key}"
   })
 }

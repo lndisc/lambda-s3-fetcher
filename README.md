@@ -34,6 +34,8 @@ The task itself wasn't challenging once you know the basics of AWS and Terraform
 
 Also I needed help for optimizing the python code with http code responses.
 
+Other point to mention is that the inicial idea was to set the bucket name and file name to be fetched inside the python code. I externalized and passed during execution to have a lambda reusable.
+
 ## Were there any additional resources (either on Azure or AWS) required during the implementation? If so, please explain their necessity in the context of the solution.
 
 IAM resources were essential for ensuring the security and proper functioning of our infrastructure on AWS. Specifically, they were required to manage permissions effectively, keeping the S3 Bucket private and granting necessary permissions to the Lambda function.
