@@ -79,3 +79,12 @@ data "aws_lambda_invocation" "invoke_lambda" {
     "object_key": "${aws_s3_object.hello_world.key}"
   })
 }
+
+# Invoking the Lambda function should fail
+data "aws_lambda_invocation" "invoke_lambda_fail" {
+  function_name = aws_lambda_function.hello_world_lambda.arn
+  input = jsonencode({
+    "bucket_name": var.bucket_name,
+    "object_key": "${aws_s3_object.bye_world.key}"
+  })
+}
