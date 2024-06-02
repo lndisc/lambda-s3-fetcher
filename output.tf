@@ -1,3 +1,3 @@
 output "result_entry" {
-  value = jsondecode(data.aws_lambda_invocation.example.result)["key1"]
+  value = jsondecode(data.aws_lambda_invocation.invoke_lambda.result)["key1"]
 }
