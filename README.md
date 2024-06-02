@@ -3,7 +3,6 @@
 This project creates an AWS Lambda function and an S3 bucket using Terraform.
 
 ## Resources and documentation
-https://developer.hashicorp.com/terraform/language/modules/develop/structure
 
 ## Requirements
 

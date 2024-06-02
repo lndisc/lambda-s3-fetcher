@@ -5,6 +5,13 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "s3" {
+    bucket         	   = "eg-dev-tf-lambda-s3-fetcher"
+    key              	   = "state/terraform.tfstate"
+    region         	   = "eu-west-1"
+    encrypt        	   = true
+    dynamodb_table = "eg-dev-tf-lambda-s3-fetcher-lock"
+  }  
 }
 
 provider "aws" {
