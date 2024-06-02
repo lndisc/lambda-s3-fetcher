@@ -52,6 +52,7 @@ data "archive_file" "lambda" {
   type        = "zip"
   source_file = "${path.module}/lambda/lambda_function.py"
   output_path = "${path.module}/lambda/lambda_function.zip"
+  output_base64sha256 = true
 }
 
 # Lambda function
