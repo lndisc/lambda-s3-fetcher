@@ -55,7 +55,6 @@ data "archive_file" "lambda" {
 }
 
 # Lambda function
-
 resource "aws_lambda_function" "hello_world_lambda" {
   filename      = data.archive_file.lambda.output_path
   function_name = var.lambda_function_name
