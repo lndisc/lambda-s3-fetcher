@@ -4,7 +4,6 @@ import json
 def lambda_handler(event, context):
     s3 = boto3.client('s3')
     
-    # Obtener el nombre del bucket y el objeto de S3 del evento
     bucket_name = event['bucket_name']
     object_key = event['object_key']
 
